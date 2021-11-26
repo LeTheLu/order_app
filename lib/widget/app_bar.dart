@@ -9,9 +9,10 @@ Widget appBarTheme(
   VoidCallback? onPressedLeading,
 }) {
   return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
     color: Colors.transparent,
     width: MediaQuery.of(context).size.width,
-    height: 50,
+    height: 70,
     child: Row(
       children: [
         Visibility(

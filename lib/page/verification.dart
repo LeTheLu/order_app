@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:order_app/colors.dart';
-import 'package:order_app/widget/app_bar.dart';
-import 'package:order_app/widget/button/button_clip.dart';
+import 'package:order_app/utils/colors.dart';
+import 'package:order_app/widgets/app_bar.dart';
+import 'package:order_app/widgets/button/button_clip.dart';
 
 class Verification extends StatefulWidget {
   const Verification({Key? key}) : super(key: key);

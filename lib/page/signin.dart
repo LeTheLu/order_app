@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:order_app/widget/button/button.dart';
+import 'package:get/get.dart';
+import 'package:order_app/routes/routes.dart';
+import 'package:order_app/utils/colors.dart';
+import 'package:order_app/widgets/button/button.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -32,12 +34,18 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children:[
-                        Image.asset("assets/logo/ensign.png"),
-                        const SizedBox(width: 10,),
-                        const Text("+880", style: TextStyle(fontSize: 18),)
-                      ],
+                    InkWell(
+                    highlightColor: Colors.white54,
+                      onTap: (){
+                        Get.toNamed(Routes.NUMBER);
+                      },
+                      child: Row(
+                        children:[
+                          Image.asset("assets/logo/ensign.png"),
+                          const SizedBox(width: 10,),
+                          const Text("+880", style: TextStyle(fontSize: 18),)
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 15,),
                     const Expanded(
@@ -52,11 +60,18 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              InkWell(
+                onTap: (){
+                  Get.toNamed(Routes.LOG_IN);
+                },
+                child: Text("Login with Email", style: TextStyle(fontSize: 14,color: ColorApp.themeColor,)),
+              ),
+              const SizedBox(height: 20),
               const Text("Or connect with social media", style: TextStyle(fontSize: 14,color: Color(0xff828282)),),
               const SizedBox(height: 37.8,),
-              buttonBig(nameButton: "Continue with Google", imageIcon: Image.asset("assets/icons/google.png"),color: const Color(0xFF5383EC),fontSize: 18),
+              Button(onTap: (){},nameButton: "Continue with Google", imageIcon: Image.asset("assets/icons/google.png"),color: const Color(0xFF5383EC),fontSize: 18),
               const SizedBox(height: 20),
-              buttonBig(nameButton: "Continue with Facebook", imageIcon: Image.asset("assets/icons/facebook.png"),color: const Color(0xFF4A66AC),fontSize: 18),
+              Button(nameButton: "Continue with Facebook", imageIcon: Image.asset("assets/icons/facebook.png"),color: const Color(0xFF4A66AC),fontSize: 18),
             ],
           )
         ],

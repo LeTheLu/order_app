@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:order_app/colors.dart';
-import 'package:order_app/widget/button/button.dart';
-import 'package:order_app/widget/text_field/text_field_email_or_pass.dart';
+import 'package:get/get.dart';
+import 'package:order_app/routes/routes.dart';
+import 'package:order_app/utils/colors.dart';
+import 'package:order_app/widgets/button/button.dart';
+import 'package:order_app/widgets/text_field/text_field_email_or_pass.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -71,7 +73,9 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          buttonBig(nameButton: "Login",fontSize: 18),
+                          Button(nameButton: "Login",fontSize: 18, onTap: (){
+                            Get.offAllNamed(Routes.HOME_SCREEN);
+                          }),
                           const SizedBox(height: 20,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +84,7 @@ class _LoginState extends State<Login> {
                               const SizedBox(width: 10,),
                               GestureDetector(
                                 onTap: (){
-
+                                  Get.toNamed(Routes.SIGN_UP);
                                 },
                                 child: Text("Singup", style: TextStyle(color: ColorApp.themeColor),),
                               )

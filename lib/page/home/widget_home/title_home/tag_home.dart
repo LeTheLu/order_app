@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../colors.dart';
+import '../../../../utils/colors.dart';
 
-Widget menuHome({required String title, required String titleAction, required VoidCallback onTapAction}){
+Widget tagHome({required String title, required String titleAction, required VoidCallback onTapAction}){
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 30.0),
+    padding: const EdgeInsets.only(top: 30.0, bottom: 30.0, right: 24),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

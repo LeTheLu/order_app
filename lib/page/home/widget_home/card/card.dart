@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:order_app/colors.dart';
+import 'package:order_app/utils/colors.dart';
 
 Widget cardItem({required String image, required String title,required String price, required String properties}){
   return Padding(
@@ -13,7 +13,7 @@ Widget cardItem({required String image, required String title,required String pr
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(18)),
         border: Border.all(
-          color: ColorApp.greyColor,
+          color: const Color(0xFFE2E2E2),
           width: 1
         ),
       ),

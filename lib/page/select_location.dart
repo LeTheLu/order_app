@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:order_app/widget/app_bar.dart';
-import 'package:order_app/widget/button/button.dart';
-import 'package:order_app/widget/text_field/text_field.dart';
+import 'package:order_app/widgets/app_bar.dart';
+import 'package:order_app/widgets/button/button.dart';
+import 'package:order_app/widgets/text_field/text_field.dart';
 
 class SelectLocation extends StatefulWidget {
   const SelectLocation({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _SelectLocationState extends State<SelectLocation> {
             textFieldZone(context, title: "Your Zone",),
             textFieldZone(context, title: "Your Area",),
             const SizedBox(height: 80,),
-            buttonBig(nameButton: "Submit", fontSize: 18)
+            Button(nameButton: "Submit", fontSize: 18)
           ],
         ),
       ),

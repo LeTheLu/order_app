@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:order_app/page/signin/signin.dart';
 import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/widgets/button/button.dart';
 
-class Onbording extends StatefulWidget {
+class Onbording extends StatelessWidget {
   const Onbording({Key? key}) : super(key: key);
 
-  @override
-  _OnbordingState createState() => _OnbordingState();
-}
 
-class _OnbordingState extends State<Onbording> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

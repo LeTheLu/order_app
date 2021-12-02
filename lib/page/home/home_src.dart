@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:order_app/page/home/widget_home/card/card.dart';
 import 'package:order_app/page/home/widget_home/list_view/list_item.dart';
 import 'package:order_app/page/home/widget_home/list_view/list_menu_horizontal.dart';
 import 'package:order_app/widgets/bottom_appbar/bottom_appbar.dart';
@@ -21,15 +20,15 @@ class _HomeSrcState extends State<HomeSrc> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(left:  24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(right: 24),
+                    padding: const EdgeInsets.only(top: 30 , right: 24),
                 child: Column(
                   children: [
                     SizedBox(

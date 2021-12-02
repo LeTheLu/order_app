@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/singin_controller.dart';
 import 'package:order_app/routes/routes.dart';
-import 'package:order_app/widgets/app_bar.dart';
+import 'package:order_app/widgets/appbar/app_bar.dart';
 import 'package:order_app/widgets/button/button_clip.dart';
-import 'package:flutter/services.dart';
 
-class Number extends StatefulWidget {
+class Number extends StatelessWidget {
   const Number({Key? key}) : super(key: key);
 
-  @override
-  _NumberState createState() => _NumberState();
-}
 
-class _NumberState extends State<Number> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,12 +43,16 @@ class _NumberState extends State<Number> {
                             const SizedBox(width: 10,),
                             const Text("+880", style: TextStyle(fontSize: 18),),
                             const SizedBox(width: 20,),
-                            const Expanded(child: TextField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration.collapsed(
-                                hintText: "",
-                              ),
-                            ))
+                            GetBuilder<SingInController>(
+                              builder: (SingInController _controller) =>  Expanded(
+                                  child: TextField(
+                                    controller: _controller.textEditingController,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration.collapsed(
+                                      hintText: "",
+                                    ),
+                                  )),
+                            )
                           ],
                         ),
                         const SizedBox(height: 15,),
@@ -67,9 +67,20 @@ class _NumberState extends State<Number> {
               Positioned(
                   bottom: 24.56,
                   right: 24.56,
-                  child: buttonCircle(onPressed: (){
-                    Get.toNamed(Routes.VETIFICATION);
-                  }))
+                  child: GetBuilder<SingInController>(
+                    builder: (SingInController _controller) {
+                      return buttonCircle(onPressed: (){
+                        if(_controller.textEditingController.text.length == 10){
+                          Get.toNamed(Routes.VETIFICATION);
+                          _controller.signInWithPhone(numberPhone: _controller.textEditingController.text.substring(1));
+                          print(_controller.textEditingController.text.substring(1));
+                        }else {
+                         print("Oh! số chưa đủ rồi");
+                        }
+                      });
+                      }
+                  )
+              )
             ],
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 List<Color> listColors = [
-  const Color.fromARGB(25, 83, 177, 117),
+  const Color.fromARGB(25, 83, 177, 117).withOpacity(0.5),
   const Color.fromARGB(25, 248, 164, 76),
   const Color.fromARGB(64, 247, 165, 147),
   const Color.fromARGB(64, 211, 176, 224),

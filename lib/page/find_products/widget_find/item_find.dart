@@ -9,6 +9,7 @@ List<Color> listColors = [
   const Color.fromARGB(64, 183, 223, 245),
   const Color.fromARGB(38, 131, 106, 246),
   const Color.fromARGB(38, 215, 59, 119),
+  const Color(0xFF53B175).withOpacity(0.5)
 ];
 
 void main(){
@@ -35,7 +36,7 @@ class _ItemCartFindState extends State<ItemCartFind> {
                   color: Color.fromARGB(25, 83, 177, 117),
                   borderRadius: BorderRadius.all(Radius.circular(18)),
                 border: Border.all(
-                  color: Color.fromARGB(25, 83, 177, 117),
+                  color: Color.fromARGB(25*10, 83, 177, 117),
                   width: 1
                 )
               ),

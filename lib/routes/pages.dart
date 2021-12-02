@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:order_app/binding/first_home_bindings.dart';
 import 'package:order_app/binding/select_location.dart';
 import 'package:order_app/binding/singup_binding.dart';
+import 'package:order_app/page/find_products/find_products.dart';
 import 'package:order_app/page/first_home/first_home.dart';
 import 'package:order_app/page/home/home_src.dart';
 import 'package:order_app/page/login/login.dart';
@@ -59,6 +60,10 @@ class Pages {
     GetPage(
       name: Routes.PRODUCT_DETAIL,
       page: () => const ProductDetail(),
+    ),
+    GetPage(
+      name: Routes.EXPLORE,
+      page: () => const FindProducts(),
     ),
 
   ];

@@ -34,7 +34,7 @@ Widget appBarTheme(
         ),),
         Visibility(
           visible: title == null ? false: true,
-            child: Text(title ?? "")),
+            child: Text(title ?? "", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),)),
         Visibility(
           visible: iconAction == null ? false : true,
           child: Container(

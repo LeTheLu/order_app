@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:order_app/page/home/widget_home/card/card.dart';
+import 'package:order_app/widgets/card/card.dart';
 
 
 String urlImg = "https://images.immediate.co.uk/production/volatile/sites/30/2017/01/Bananas-218094b-scaled.jpg?quality=90&resize=960%2C872";

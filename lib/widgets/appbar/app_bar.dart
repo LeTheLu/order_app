@@ -20,7 +20,7 @@ Widget appBarTheme(
         Visibility(
           visible: iconLeading == null ? false : true,
           child: Container(
-            margin: const EdgeInsets.only(left: 25),
+            margin: const EdgeInsets.only(left: 10),
           height: 40,
           width: 40,
           child: InkWell(

@@ -18,4 +18,5 @@ class Routes {
   static const ORDER_ACCEPTED = "/order-accepted";
   static const ERROR = "/error";
   static const ACCOUNT = "/account";
+  static const BEVERAGES = "/beverages";
 }

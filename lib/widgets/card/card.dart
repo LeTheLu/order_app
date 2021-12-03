@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:order_app/utils/colors.dart';
 
-Widget cardItem({required String image, required String title,required String price, required String properties}){
+Widget cardItem({required String image, required String title,required String price, required String properties, double? rightVetical }){
   return Padding(
-    padding: const EdgeInsets.only(right: 15),
+    padding: EdgeInsets.only(right: rightVetical ?? 15),
     child: Container(
       height: 248.51,
       width: 173.32,
@@ -27,7 +27,7 @@ Widget cardItem({required String image, required String title,required String pr
             width: 120,
             child: Image.network(
               image,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
                 return const Center(

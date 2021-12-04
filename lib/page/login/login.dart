@@ -70,22 +70,23 @@ class _LoginState extends State<Login> {
                     ),
                     Expanded(
                         flex: 1,
-                        child: GetBuilder<LoginController>(
-                          init: LoginController(),
-                          builder: (controller) => Column(
+                        child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              textFieldGmailOrPass(context, title: "Gmail", controller: controller.emailController),
-                              textFieldGmailOrPass(context,
-                                  title: "Password", checkPass: true,controller: controller.passController),
+                              textFieldGmailOrPass(context, title: "Gmail", controller: controller.emailController,),
+                              GetBuilder<LoginController>(
+                              init: LoginController(),
+                              builder: (controller) => textFieldGmailOrPass(context,
+                                  title: "Password", checkPass: true,controller: controller.passController)
+                              ),
                               GestureDetector(
                                 onTap: () {},
                                 child: const Text("Forgot Password?"),
                               )
                             ],
                           ),
-                        )),
+                        ),
                     Expanded(
                       flex: 1,
                       child: Column(

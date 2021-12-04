@@ -20,7 +20,7 @@ Widget textFieldGmailOrPass(BuildContext context,{required String title, bool? c
               children: [
                 TextField(
                   controller: controller,
-                  obscureText: _loginController.checkPasswordHind,
+                  obscureText: checkPass == true ? _loginController.checkPasswordHind : false ,
                   decoration: const InputDecoration(
                   ),
                 ),

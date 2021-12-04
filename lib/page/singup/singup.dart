@@ -31,101 +31,93 @@ class _SingUpState extends State<SingUp> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                              child: Center(
-                                  child: SvgPicture.asset("assets/icons/logoColor.svg"))),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Sign Up",style: TextStyle(fontFamily: "GilroyBold",fontSize: 26),),
-                              const SizedBox(height: 10,),
-                              Text("Enter your credentials to continue",style: TextStyle(fontFamily: "GilroyLight",fontSize: 16,color: ColorApp.greyColor, fontWeight: FontWeight.w600)),
-                              const SizedBox(height: 20,),
-                            ],
-                          )
-                        ],
-                      ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                            child: SvgPicture.asset("assets/icons/logoColor.svg")),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Sign Up",style: TextStyle(fontFamily: "GilroyBold",fontSize: 26),),
+                            const SizedBox(height: 10,),
+                            Text("Enter your credentials to continue",style: TextStyle(fontFamily: "GilroyLight",fontSize: 16,color: ColorApp.greyColor, fontWeight: FontWeight.w600)),
+                            const SizedBox(height: 20,),
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                  Expanded(
-                      flex: 1,
-                      child: GetBuilder<SingUpController>(
-                        init: SingUpController(),
-                        builder: (SingUpController _controller) =>  Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                  GetBuilder<SingUpController>(
+                    init: SingUpController(),
+                    builder: (SingUpController _controller) =>  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        textFieldGmailOrPass(context,title: "Username", controller: _controller.nameTextController),
+                        textFieldGmailOrPass(context,title: "Gmail", controller: _controller.emailTextController),
+                        textFieldGmailOrPass(context,title: "Password",checkPass: true, controller: _controller.passTextController),
+                        Column(
                           children: [
-                            textFieldGmailOrPass(context,title: "Username", controller: _controller.nameTextController),
-                            textFieldGmailOrPass(context,title: "Gmail", controller: _controller.emailTextController),
-                            textFieldGmailOrPass(context,title: "Password",checkPass: true, controller: _controller.passTextController),
-                            Column(
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Text("By continuing you agree to our ",style: TextStyle(color: ColorApp.greyColor , fontFamily: "GilroyLight",fontSize: 14,)),
-                                    GestureDetector(
-                                      onTap: (){},
-                                      child: Text("Terms of Service",style: TextStyle(color: ColorApp.themeColor , fontFamily: "GilroyLight",fontSize: 14,)),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text("and ",style: TextStyle(color: ColorApp.greyColor , fontFamily: "GilroyLight",fontSize: 14,)),
-                                    GestureDetector(
-                                      onTap: (){},
-                                      child: Text("Privacy Policy", style: TextStyle(color: ColorApp.themeColor , fontFamily: "GilroyLight",fontSize: 14,),),
-                                    )
-                                  ],
-                                ),
+                                Text("By continuing you agree to our ",style: TextStyle(color: ColorApp.greyColor , fontFamily: "GilroyLight",fontSize: 14,)),
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: Text("Terms of Service",style: TextStyle(color: ColorApp.themeColor , fontFamily: "GilroyLight",fontSize: 14,)),
+                                )
                               ],
-                            )
-
+                            ),
+                            Row(
+                              children: [
+                                Text("and ",style: TextStyle(color: ColorApp.greyColor , fontFamily: "GilroyLight",fontSize: 14,)),
+                                GestureDetector(
+                                  onTap: (){},
+                                  child: Text("Privacy Policy", style: TextStyle(color: ColorApp.themeColor , fontFamily: "GilroyLight",fontSize: 14,),),
+                                )
+                              ],
+                            ),
                           ],
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 30,),
-                          GetBuilder<SingUpController>(
-                            init: SingUpController(),
-                            builder: (SingUpController _controller) => 
-                                Button(nameButton: "Sing Up",fontSize: 18, onTap: (){
-                                  _controller.singUpGmailAndPass(
-                                      email: _controller.emailTextController.text,
-                                      password: _controller.passTextController.text,
-                                      nameUser: _controller.nameTextController.text).then((value) {});
+                        )
 
-                            },),),
-                          const SizedBox(height: 25,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Already have an account?"),
-                              const SizedBox(width: 10,),
-                              GestureDetector(
-                                onTap: (){
-                                  Get.back();
-                                },
-                                child: Text("Login", style: TextStyle(color: ColorApp.themeColor),),
-                              )
-                            ],
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 30,),
+                      GetBuilder<SingUpController>(
+                        init: SingUpController(),
+                        builder: (SingUpController _controller) =>
+                            Button(nameButton: "Sing Up",fontSize: 18, onTap: (){
+                              _controller.singUpGmailAndPass(
+                                  email: _controller.emailTextController.text,
+                                  password: _controller.passTextController.text,
+                                  nameUser: _controller.nameTextController.text).then((value) {});
+
+                        },),),
+                      const SizedBox(height: 25,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Already have an account?"),
+                          const SizedBox(width: 10,),
+                          GestureDetector(
+                            onTap: (){
+                              Get.back();
+                            },
+                            child: Text("Login", style: TextStyle(color: ColorApp.themeColor),),
                           )
                         ],
-                      ))
+                      )
+                    ],
+                  )
                 ],
               ),
             ),

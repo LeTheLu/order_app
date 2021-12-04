@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/utils/text_styte.dart';
 import 'package:order_app/widgets/button/button.dart';
@@ -26,7 +27,9 @@ class Checkout extends StatelessWidget {
                   children: [
                     const Text("Checkout", style: TextStyle(fontSize: 24, fontFamily: Font.fontLight, fontWeight: FontWeight.w600),),
                     InkWell(
-                      onTap: (){},
+                      onTap: (){
+                        Get.back();
+                      },
                       child: const Icon(Icons.clear),
                     )
                   ],

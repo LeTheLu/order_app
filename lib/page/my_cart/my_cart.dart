@@ -34,7 +34,7 @@ class MyCart extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   children: [
                     Button(fontSize: 18,nameButton: "Go to Checkout",onTap: (){
-                      Get.bottomSheet(Checkout(),isScrollControlled: true);
+                      Get.bottomSheet(const Checkout(),isScrollControlled: true);
                     },),
                     Positioned(
                       right: 24,

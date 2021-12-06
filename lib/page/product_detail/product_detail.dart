@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:order_app/models/product.dart';
 import 'package:order_app/page/product_detail/widget_prduct_detail/expand_pro.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/widgets/appbar/app_bar.dart';
@@ -13,14 +14,14 @@ class ProductDetail extends StatefulWidget {
   State<ProductDetail> createState() => _ProductDetailState();
 }
 
-class _ProductDetailState extends State<ProductDetail>
-    with SingleTickerProviderStateMixin {
-  final int _numberDot = 3;
+class _ProductDetailState extends State<ProductDetail> with SingleTickerProviderStateMixin {
   late TabController _controller;
+  late Product product;
 
   @override
   void initState() {
-    _controller = TabController(length: _numberDot, vsync: this);
+    product = Get.arguments;
+    _controller = TabController(length: product.img.length, vsync: this);
     super.initState();
   }
 
@@ -50,13 +51,17 @@ class _ProductDetailState extends State<ProductDetail>
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          PageView.builder(
-                            onPageChanged: (value) =>
-                                _controller.animateTo(value),
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return Image.asset("assets/background/apple.png");
-                            },
+                          SizedBox(
+                            height: 200,
+                            width: 300,
+                            child: PageView.builder(
+                              onPageChanged: (value) =>
+                                  _controller.animateTo(value),
+                              itemCount: product.img.length,
+                              itemBuilder: (context, index) {
+                                return Image.network(product.img[index], fit: BoxFit.contain);
+                              },
+                            ),
                           ),
                           Positioned(
                               bottom: 30,
@@ -78,9 +83,9 @@ class _ProductDetailState extends State<ProductDetail>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Naturel Red Apple",
-                                style: TextStyle(
+                              Text(
+                                product.name,
+                                style: const TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                               SvgPicture.asset("assets/icons/heart.svg"),
@@ -125,7 +130,7 @@ class _ProductDetailState extends State<ProductDetail>
                                 ),
                               ),
                               Text(
-                                "\$4.99",
+                                product.price,
                                 style: TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.bold),
                               )

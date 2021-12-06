@@ -24,7 +24,7 @@ class Beverages extends StatelessWidget {
                       maxCrossAxisExtent: 200,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15),
-                  itemBuilder: (context, index) => cardItem(rightVetical: 0,title: "title",properties: "properties",price: "price" ,image: "https://cf.shopee.vn/file/7005c74de8dea2ca74a5a6682cb06689"),),
+                  itemBuilder: (context, index) => SizedBox(),),
               ),
             )
           ],

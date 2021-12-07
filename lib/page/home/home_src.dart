@@ -124,7 +124,6 @@ class _HomeSrcState extends State<HomeSrc> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomAppbar(),
     );
   }
 }

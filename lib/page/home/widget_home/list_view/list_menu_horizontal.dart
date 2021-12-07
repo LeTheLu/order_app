@@ -44,7 +44,7 @@ class ListMenuHorizontal extends StatelessWidget {
             width: 248.19,
             height: 105,
             decoration: BoxDecoration(
-              color: index %2 == 0 ? const Color(0xFFF8A44C) : const Color(0xFF53B175),
+              color: index %2 == 0 ? const Color(0xFFF8A44C).withOpacity(0.5) : const Color(0xFF53B175).withOpacity(0.5),
               borderRadius: const BorderRadius.all(Radius.circular(18)),
             ),
             child: Row(

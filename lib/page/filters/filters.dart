@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:order_app/page/filters/widget_filters/check_box_filters.dart';
 import 'package:order_app/utils/text_styte.dart';
 import 'package:order_app/widgets/appbar/app_bar.dart';
@@ -14,7 +15,7 @@ class Filters extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            appBarTheme(context,iconLeading: const Icon(Icons.arrow_back_ios), title: "Filters", ),
+            appBarTheme(context,iconLeading: const Icon(Icons.arrow_back_ios), title: "Filters", onPressedLeading: () => Get.back() ),
             Expanded(
               child: Stack(
                 alignment: Alignment.center,

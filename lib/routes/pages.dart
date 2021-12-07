@@ -9,6 +9,7 @@ import 'package:order_app/page/favorites/favorites.dart';
 import 'package:order_app/page/filters/filters.dart';
 import 'package:order_app/page/find_products/find_products.dart';
 import 'package:order_app/page/first_home/first_home.dart';
+import 'package:order_app/page/home/home_all.dart';
 import 'package:order_app/page/home/home_src.dart';
 import 'package:order_app/page/login/login.dart';
 import 'package:order_app/page/my_cart/my_cart.dart';
@@ -101,6 +102,10 @@ class Pages {
     GetPage(
       name: Routes.ACCOUNT,
       page: () => const Account(),
+    ),
+    GetPage(
+      name: Routes.HOMEALL,
+      page: () => const HomeAll(),
     ),
 
   ];

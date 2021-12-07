@@ -19,4 +19,5 @@ class Routes {
   static const ERROR = "/error";
   static const ACCOUNT = "/account";
   static const BEVERAGES = "/beverages";
+  static const HOMEALL = "/home-all";
 }

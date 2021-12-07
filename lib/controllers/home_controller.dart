@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:order_app/firebase/function_firebase.dart';
 import 'package:order_app/models/product.dart';
 
 class HomeController extends GetxController {
@@ -16,7 +17,7 @@ class HomeController extends GetxController {
       listData = value.data()!.values.first;
     });
     await Future.forEach(listData, (element) async {
-      sanPham = await getProductById(idProduct: element.toString());
+      sanPham = await FunctionFireBase.getProductById(idProduct: element.toString());
       dataExclusiveOffer.add(sanPham);
       update();
     });
@@ -31,7 +32,7 @@ class HomeController extends GetxController {
       listData = value.data()!.values.first;
     });
     await Future.forEach(listData, (element) async {
-      sanPham = await getProductById(idProduct: element.toString());
+      sanPham = await FunctionFireBase.getProductById(idProduct: element.toString());
       dataBestSelling.add(sanPham);
       update();
     });
@@ -46,35 +47,11 @@ class HomeController extends GetxController {
       listData = value.data()!.values.first;
     });
     await Future.forEach(listData, (element) async {
-      sanPham = await getProductById(idProduct: element.toString());
+      sanPham = await FunctionFireBase.getProductById(idProduct: element.toString());
       dataGroceries.add(sanPham);
       update();
     });
     return dataGroceries;
-  }
-
-  Future<Product> getProductById({required String idProduct}) async {
-    DocumentSnapshot<Map<String, dynamic>> product;
-    Product sanpham;
-
-    product = await _firebaseFirestore.collection("product").doc("sanpham").collection("drinks").doc(idProduct).get();
-    if(product.data() == null){
-      product = await _firebaseFirestore.collection("product").doc("sanpham").collection("foods").doc(idProduct).get();
-      if(product.data() == null){
-        product = await _firebaseFirestore.collection("product").doc("sanpham").collection("fruits").doc(idProduct).get();
-      }
-    }
-
-    sanpham = Product(
-      description: product.data()!["description"],
-      price:  product.data()!["price"],
-      name:  product.data()!["name"],
-      img: product.data()!["img"],
-      type: product.data()!["type"],
-    );
-
-
-    return sanpham;
   }
 
   @override

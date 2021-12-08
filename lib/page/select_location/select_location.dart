@@ -29,14 +29,8 @@ class SelectLocation extends StatelessWidget {
               const SizedBox(
                 height: 90,
               ),
-              textFieldZone(
-                context,
-                title: "Your Zone",
-              ),
-              textFieldZone(
-                context,
-                title: "Your Area",
-              ),
+              const TextFieldZone(),
+              TextFieldArea(),
               const SizedBox(
                 height: 80,
               ),

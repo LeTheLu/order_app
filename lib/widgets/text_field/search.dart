@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:order_app/controllers/find_products_controller.dart';
 
 import '../../utils/colors.dart';
 
-Widget search(){
+Widget search({TextEditingController? textEditingController, VoidCallback? onEditingComplete}){
   return Container(
     width : double.infinity,
     height: 51.57,
@@ -21,11 +23,21 @@ Widget search(){
             child: SvgPicture.asset("assets/icons/search.svg"),
           ),
         ),
-        Expanded(child: TextField(
-          decoration: InputDecoration.collapsed(
-              hintText: "Search Store",
-            hintStyle: TextStyle(fontFamily: "GilroyLight",fontSize: 14,color: ColorApp.greyColor, fontWeight: FontWeight.w600))
-          ),
+        Expanded(child: GetBuilder<FindProductsController>(
+          init: FindProductsController(),
+          builder: (FindProductsController _controller) {
+            return TextField(
+              controller: _controller.textEditingController,
+              textInputAction: TextInputAction.search,
+              onEditingComplete: (){
+                onEditingComplete!.call();
+              },
+              decoration: InputDecoration.collapsed(
+                  hintText: "Search Store",
+                hintStyle: TextStyle(fontFamily: "GilroyLight",fontSize: 14,color: ColorApp.greyColor, fontWeight: FontWeight.w600))
+              );
+          }
+        ),
         ),
       ],
     ),

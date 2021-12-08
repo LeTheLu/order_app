@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:order_app/models/product.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/utils/text_styte.dart';
 
 class ItemCart extends StatelessWidget {
-  const ItemCart({Key? key}) : super(key: key);
+  final Product product;
+
+  const ItemCart({Key? key, required this.product}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +26,30 @@ class ItemCart extends StatelessWidget {
                   height: 100,
                   width: 100,
                   color: Colors.teal,
-                ),
+                  child: Image.network(product.img[0],
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+
+                      return const Center(child: CircularProgressIndicator());
+                      // You can use LinearProgressIndicator or CircularProgressIndicator instead
+                    },
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Center(child: Icon(Icons.clear),),
+                  )),
                 const SizedBox(width: 20,),
                 SizedBox(
                   width: 241,
-                  height: 104,
+                  height: 120,
                   child: Row(
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Title",style: TextStyle(fontSize: 16, fontFamily: Font.fontBold),),
+                          Text(product.name,style: const TextStyle(fontSize: 16, fontFamily: Font.fontBold),),
                           const SizedBox(height: 5,),
-                          Text("Title",style: TextStyle(fontSize: 14, fontFamily: Font.fontLight),),
+                          Text(product.description.substring(0, 30),style: const TextStyle(fontSize: 14, fontFamily: Font.fontLight),),
                           const SizedBox(height: 14,),
                           Row(
                             children: [
@@ -67,7 +81,7 @@ class ItemCart extends StatelessWidget {
               right: 25,
               child: InkWell(
                 onTap: (){},
-                child: Text("\$4.99", style: TextStyle(
+                child: Text("\$${product.price}", style: const TextStyle(
                   fontFamily: Font.fontBold,
                   fontSize: 18
                 ),),

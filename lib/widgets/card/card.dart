@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:order_app/controllers/home_controller.dart';
+import 'package:order_app/firebase/function_firebase.dart';
 import 'package:order_app/models/product.dart';
 import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/colors.dart';
 
-Widget cardItem({required Product product, double? rightVetical }){
+Widget cardItem({required Product product,required String idProduct, double? rightVetical }){
   return Padding(
     padding: EdgeInsets.only(right: rightVetical ?? 15),
     child: GetBuilder<HomeController>(
@@ -62,7 +63,7 @@ Widget cardItem({required Product product, double? rightVetical }){
                         Text(product.price,  style: const  TextStyle(color: Colors.black , fontFamily: "GilroyBold",fontSize: 18,)),
                         GestureDetector(
                           onTap: (){
-                            print("them san pham");
+                            FunctionFireBase.addProduct(gmail: controller.emailUser, idProduct: idProduct);
                           },
                           child: SvgPicture.asset("assets/icons/+.svg"),
                         )

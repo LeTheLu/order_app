@@ -22,8 +22,7 @@ class ListItem extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: listProduct!.length,
-          itemBuilder: (context, index) => cardItem(
-            product: listProduct![index]),),
+          itemBuilder: (context, index) => cardItem(product: listProduct![index], idProduct:  listProduct![index].id)),
       )
           : Text("Chưa có khuyến mãi"),
     );

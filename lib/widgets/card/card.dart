@@ -63,7 +63,10 @@ Widget cardItem({required Product product,required String idProduct, double? rig
                         Text(product.price,  style: const  TextStyle(color: Colors.black , fontFamily: "GilroyBold",fontSize: 18,)),
                         GestureDetector(
                           onTap: (){
-                            FunctionFireBase.addProduct(gmail: controller.emailUser, idProduct: idProduct);
+                            FunctionFireBase.addProduct(gmail: controller.homeAllController.email, idProduct: idProduct);
+                            print("email${controller.homeAllController.email}");
+                            print(idProduct);
+
                           },
                           child: SvgPicture.asset("assets/icons/+.svg"),
                         )

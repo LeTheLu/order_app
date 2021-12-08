@@ -54,7 +54,7 @@ class _HomeSrcState extends State<HomeSrc> {
                             GetBuilder<HomeController>(
                               init:  HomeController(),
                               builder: (controller) {
-                                return Text("${controller.areaUser}, ${controller.zoneUser}",
+                                return controller.homeAllController.userApp.isNull ? Text("loading"): Text(controller.homeAllController.userApp!.zone ?? "",
                                     style: TextStyle(
                                         fontFamily: "GilroyLight",
                                         fontSize: 18,

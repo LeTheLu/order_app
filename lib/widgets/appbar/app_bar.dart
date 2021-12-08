@@ -11,7 +11,7 @@ Widget appBarTheme(
 }) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 10),
-    color: Colors.transparent,
+    color: Colors.white,
     width: MediaQuery.of(context).size.width,
     height: 70,
     child: Row(

@@ -19,7 +19,7 @@ class Beverages extends StatelessWidget {
           builder: (controller) {
             return Column(
               children: [
-                appBarTheme(context,title: Get.arguments, iconLeading: const Icon(Icons.arrow_back_ios), iconAction: SvgPicture.asset("assets/icons/filters.svg")),
+                appBarTheme(context,title: Get.arguments, iconLeading: const Icon(Icons.arrow_back_ios), iconAction: SvgPicture.asset("assets/icons/filters.svg"), onPressedLeading: ()=> Get.back()),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),

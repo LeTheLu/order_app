@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:order_app/controllers/my_cart_controller.dart';
 import 'package:order_app/page/my_cart/widget_my_cart/checkout.dart';
-import 'package:order_app/page/my_cart/widget_my_cart/item_my_cart.dart';
+import 'package:order_app/page/my_cart/widget_my_cart/item_my_cart/item_my_cart.dart';
 import 'package:order_app/widgets/appbar/app_bar.dart';
 import 'package:order_app/widgets/button/button.dart';
 
@@ -28,11 +28,12 @@ class MyCart extends StatelessWidget {
                       return ListView.separated(
                         itemCount: controller.listDataProduct.length,
                         separatorBuilder: (context, index) => const Divider(),
-                        itemBuilder: (context, index) => ItemCart(product: controller.listDataProduct[index],),);
+                        itemBuilder: (context, index) {
+                          return ItemCart(product: controller.listDataProduct[index],);
+                        });
                     }
                   ),
                 ),
-                const SizedBox(height: 300,)
               ],
             ),
             Positioned(

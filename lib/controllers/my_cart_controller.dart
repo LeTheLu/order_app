@@ -26,11 +26,11 @@ class MyCartController extends GetxController {
   }
 
   Future<List<Product>> getListDataProduct() async {
-    Future.forEach(listCart, (element) async {
+    await Future.forEach(listCart, (element) async {
       Product product = await FunctionFireBase.getProductById(idProduct: element.toString());
       listDataProduct.add(product);
-      update();
     });
+    update();
     return listDataProduct;
   }
   @override

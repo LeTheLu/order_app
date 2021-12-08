@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:order_app/models/product.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/utils/text_styte.dart';
+
+import 'item_my_cart_controller.dart';
 
 class ItemCart extends StatelessWidget {
   final Product product;
@@ -51,14 +54,23 @@ class ItemCart extends StatelessWidget {
                           const SizedBox(height: 5,),
                           Text(product.description.substring(0, 30),style: const TextStyle(fontSize: 14, fontFamily: Font.fontLight),),
                           const SizedBox(height: 14,),
-                          Row(
-                            children: [
-                              buttonClick(add: false,onTap: (){}),
-                              const SizedBox(width: 17.45,),
-                              Text("1"),
-                              const SizedBox(width: 17.45,),
-                              buttonClick(add: true, onTap: (){}),
-                            ],
+                          GetBuilder<ItemMyCartController>(
+                            id: product.id,
+                            init: ItemMyCartController(),
+                            builder: (ItemMyCartController _controller) =>  Row(
+                              children: [
+                                buttonClick(add: false,onTap: (){
+                                  _controller.minusProduct(idProduct: product.id);
+                                  _controller.update([product.id]);
+                                }),
+                                const SizedBox(width: 17.45,),
+                                Text(_controller.countProduct.toString()),
+                                const SizedBox(width: 17.45,),
+                                buttonClick(add: true, onTap: (){
+                                  _controller.addProduct(idProduct: product.id);
+                                }),
+                              ],
+                            ),
                           )
                         ],
                       )

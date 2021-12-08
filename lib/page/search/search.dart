@@ -60,8 +60,7 @@ class Search extends StatelessWidget {
                                                 mainAxisSpacing: 15),
                                         itemBuilder: (context, index) =>
                                             cardItem(
-                                                product: _controller
-                                                    .listProduct[index]),
+                                                product: _controller.listProduct[index], idProduct: _controller.listProduct[index].id),
                                       ),
                               );
                             }))

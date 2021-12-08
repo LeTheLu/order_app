@@ -16,7 +16,7 @@ class LoginController extends GetxController{
 
   Future login() async {
     auth.signInWithEmailAndPassword(email: emailController.text, password: passController.text)
-        .then((value) => Get.toNamed(Routes.HOMEALL,arguments: emailController.text)).catchError((e){
+        .then((value) => Get.offAllNamed(Routes.HOMEALL,arguments: emailController.text)).catchError((e){
       Get.defaultDialog(
           title: "Đăng nhập không thành công",
           titleStyle: const TextStyle(color: Colors.white),
@@ -32,5 +32,10 @@ class LoginController extends GetxController{
     checkPasswordHind = !checkPasswordHind;
     update();
   }
-
+@override
+  void onInit() {
+  emailController.text = "lethelu@gmail.com";
+  passController.text = "lethelu123";
+    super.onInit();
+  }
 }

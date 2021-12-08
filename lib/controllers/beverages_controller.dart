@@ -28,7 +28,6 @@ class BeveragesController extends GetxController{
   @override
   void onInit() {
     getDataItemFindProductHome();
-    //debounce(textEditingController, callback, time: )
     // TODO: implement onInit
     super.onInit();
   }

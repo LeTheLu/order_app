@@ -12,13 +12,13 @@ class HomeController extends GetxController {
   String areaUser = "";
   String zoneUser = "";
   String emailUser = Get.arguments;
-  User? user;
+  UserApp? user;
   
   Future getUser() async {
     await _firebaseFirestore.collection("users")
         .where("email", isEqualTo: emailUser)
         .get().then((value){
-      user = User.fromJson(value.docs.first.data());
+      user = UserApp.fromJson(value.docs.first.data());
       areaUser = user!.area!;
       zoneUser = user!.zone!;
       update();

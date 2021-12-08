@@ -31,7 +31,7 @@ class Beverages extends StatelessWidget {
                           crossAxisSpacing: 15,
                           mainAxisSpacing: 15),
                       itemBuilder: (context, index) {
-                        return cardItem(product: controller.listProduct[index]);
+                        return cardItem(product: controller.listProduct[index], idProduct: controller.listProduct[index].id);
                       }),
                   ),
                 )

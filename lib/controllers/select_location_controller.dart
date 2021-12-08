@@ -18,17 +18,9 @@ class SelectLocationController extends GetxController {
       "zone": zone,
       "area": area,
     };
-    store
-        .collection("users")
-        .where("email", isEqualTo: email)
-        .get()
-        .then((value) {
+    store.collection("users").where("email", isEqualTo: email).get().then((value) {
       idUser = value.docs.first.id;
-      store
-          .collection("users")
-          .doc(idUser)
-          .update(user)
-          .then((value) => Get.offAllNamed(Routes.HOMEALL, arguments: email));
+      store.collection("users").doc(idUser).update(user).then((value) => Get.offAllNamed(Routes.HOMEALL, arguments: email));
     }).catchError((e) {});
   }
   locationData(){

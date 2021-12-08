@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/my_cart_controller.dart';
 import 'package:order_app/page/my_cart/widget_my_cart/checkout.dart';
 import 'package:order_app/page/my_cart/widget_my_cart/item_my_cart.dart';
 import 'package:order_app/widgets/appbar/app_bar.dart';
@@ -21,15 +22,21 @@ class MyCart extends StatelessWidget {
                 appBarTheme(context,title: "My Cart"),
                 const Divider(),
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: 3,
-                    separatorBuilder: (context, index) => Divider(),
-                    itemBuilder: (context, index) => const ItemCart(),),
-                )
+                  child: GetBuilder<MyCartController>(
+                    init: MyCartController(),
+                    builder: (controller) {
+                      return ListView.separated(
+                        itemCount: controller.listDataProduct.length,
+                        separatorBuilder: (context, index) => const Divider(),
+                        itemBuilder: (context, index) => ItemCart(product: controller.listDataProduct[index],),);
+                    }
+                  ),
+                ),
+                const SizedBox(height: 300,)
               ],
             ),
             Positioned(
-              bottom: 104,
+              bottom:20,
                 child: Stack(
                   alignment: Alignment.centerRight,
                   children: [

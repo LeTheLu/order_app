@@ -38,7 +38,8 @@ class TextFieldZone extends StatelessWidget {
                     });
                   },
                   onSelected: (String selection) {
-
+                    controller.zone = selection;
+                    controller.locationData();
                   },
                 ),
                 Positioned(
@@ -60,7 +61,9 @@ class TextFieldZone extends StatelessWidget {
 }
 
 class TextFieldArea extends StatelessWidget {
-  TextFieldArea({Key? key}) : super(key: key);
+  const TextFieldArea({Key? key}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -91,7 +94,7 @@ class TextFieldArea extends StatelessWidget {
                     });
                   },
                   onSelected: (String selection) {
-
+                    controller.area = selection;
                   },
                 ),
                 Positioned(

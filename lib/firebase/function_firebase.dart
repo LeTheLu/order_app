@@ -28,4 +28,8 @@ class FunctionFireBase {
     return sanpham;
   }
 
+  static Future addProduct() async {
+
+  }
+
 }

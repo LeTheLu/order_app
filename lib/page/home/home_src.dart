@@ -51,12 +51,17 @@ class _HomeSrcState extends State<HomeSrc> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text("Dhaka, Banassre",
-                                style: TextStyle(
-                                    fontFamily: "GilroyLight",
-                                    fontSize: 18,
-                                    color: ColorApp.greyColor,
-                                    fontWeight: FontWeight.w600)),
+                            GetBuilder<HomeController>(
+                              init:  HomeController(),
+                              builder: (controller) {
+                                return Text("${controller.areaUser}, ${controller.zoneUser}",
+                                    style: TextStyle(
+                                        fontFamily: "GilroyLight",
+                                        fontSize: 18,
+                                        color: ColorApp.greyColor,
+                                        fontWeight: FontWeight.w600));
+                              }
+                            ),
                           ],
                         ),
                       ),

@@ -16,9 +16,8 @@ class LoginController extends GetxController{
 
   Future login() async {
     auth.signInWithEmailAndPassword(email: emailController.text, password: passController.text)
-        .then((value) => Get.toNamed(Routes.HOME_SCREEN)).catchError((e){
+        .then((value) => Get.toNamed(Routes.HOMEALL,arguments: emailController.text)).catchError((e){
       Get.defaultDialog(
-
           title: "Đăng nhập không thành công",
           titleStyle: const TextStyle(color: Colors.white),
           backgroundColor: ColorApp.themeColor,

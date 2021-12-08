@@ -6,15 +6,12 @@ import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/location.dart';
 
 class SelectLocationController extends GetxController {
-  final SelectLocationController _selectLocationController = SelectLocationController();
-  var checkLocation = ["Hồ Chí Minh", "Hà Nội", "Đà Nẵng",];
-
-
-  FirebaseFirestore store = FirebaseFirestore.instance;
-  String email = Get.arguments;
+  var checkLocation = ["Hồ Chí Minh", "Hà Nội", "Đà Nẵng"];
   String zone = "";
   String area = "";
+  String email = Get.arguments;
   String idUser = "";
+ FirebaseFirestore store = FirebaseFirestore.instance;
 
   Future setZoneAndArea() async {
     Map<String, String> user = {
@@ -31,11 +28,11 @@ class SelectLocationController extends GetxController {
           .collection("users")
           .doc(idUser)
           .update(user)
-          .then((value) => Get.offAllNamed(Routes.HOME_SCREEN));
+          .then((value) => Get.offAllNamed(Routes.HOMEALL, arguments: email));
     }).catchError((e) {});
   }
   locationData(){
-    switch(_selectLocationController.zone){
+    switch(zone){
       case "Miền Bắc" : {
         checkLocation = LocationData.listBac;
         update();
@@ -59,6 +56,7 @@ class SelectLocationController extends GetxController {
 @override
   void onInit() {
   locationData();
+  update();
     super.onInit();
   }
 }

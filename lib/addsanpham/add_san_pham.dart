@@ -60,7 +60,7 @@ class _AddSanPhamState extends State<AddSanPham> {
   addSanPham(product){
     _storeFirebase.collection("product").doc("sanpham").collection(collection).add(product).then((value) {
       print("Done");
-    } ).catchError((e)=> print("Err"));
+    } ).catchError((e)=> print("Err "));
   }
 
   @override

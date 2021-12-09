@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/home_all_controller.dart';
 import 'package:order_app/models/product.dart';
 import 'package:order_app/utils/colors.dart';
 
 class FunctionFireBase {
+
+  static HomeAllController homeAllController = Get.find();
+
   static final FirebaseFirestore _firebaseFirestore =
       FirebaseFirestore.instance;
 
@@ -72,4 +76,13 @@ class FunctionFireBase {
   }
 
   static Future addFavorites() async {}
+
+  static Future getCountMyCart({required String idProduct}) async {
+    int count = 0;
+    await _firebaseFirestore.collection("users").doc(homeAllController.userApp!.idUser).collection("shopping")
+        .doc("cart").get().then((value) {
+      count = value.data()![idProduct];
+    });
+    return count;
+  }
 }

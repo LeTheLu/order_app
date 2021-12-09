@@ -64,8 +64,6 @@ Widget cardItem({required Product product,required String idProduct, double? rig
                         GestureDetector(
                           onTap: (){
                             FunctionFireBase.addProduct(gmail: controller.homeAllController.email, idProduct: idProduct);
-                            print("email${controller.homeAllController.email}");
-                            print(idProduct);
 
                           },
                           child: SvgPicture.asset("assets/icons/+.svg"),

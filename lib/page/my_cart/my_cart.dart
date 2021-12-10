@@ -40,7 +40,9 @@ class MyCart extends StatelessWidget {
                             return Text("Loading");
                           }
                           if(snapshot.hasData){
-                                print(snapshot.data!.data());
+                                snapshot.data!.data()!.forEach((key, value) {
+                                  controller.listCart.add(key);
+                                });
                             return Text(snapshot.data!.data().toString());
                           }
                           return ListView.separated(

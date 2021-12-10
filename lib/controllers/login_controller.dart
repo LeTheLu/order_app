@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:order_app/firebase/function_firebase.dart';
+import 'package:order_app/models/user.dart';
 import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/colors.dart';
 
@@ -16,7 +18,10 @@ class LoginController extends GetxController{
 
   Future login() async {
     auth.signInWithEmailAndPassword(email: emailController.text, password: passController.text)
-        .then((value) => Get.offAllNamed(Routes.HOMEALL,arguments: emailController.text)).catchError((e){
+        .then((value) async {
+          UserApp userApp = await FunctionFireBase.getInfoUser(email: emailController.text);
+      Get.offAllNamed(Routes.HOMEALL,arguments: userApp);
+    }).catchError((e){
       Get.defaultDialog(
           title: "Đăng nhập không thành công",
           titleStyle: const TextStyle(color: Colors.white),

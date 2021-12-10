@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:order_app/binding/first_home_bindings.dart';
+import 'package:order_app/binding/home_all_binding.dart';
 import 'package:order_app/binding/select_location.dart';
 import 'package:order_app/binding/singup_binding.dart';
 import 'package:order_app/models/product.dart';
@@ -106,6 +107,7 @@ class Pages {
     GetPage(
       name: Routes.HOMEALL,
       page: () => const HomeAll(),
+      binding: HomeAllBinding(),
     ),
 
   ];

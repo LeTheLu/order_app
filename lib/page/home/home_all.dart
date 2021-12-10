@@ -20,6 +20,7 @@ class HomeAll extends StatelessWidget {
       builder: (HomeAllController _controller) {
         return Scaffold(
           body: PageView(
+
             physics: const NeverScrollableScrollPhysics(),
             controller: _controller.pageController,
             onPageChanged: (value) {

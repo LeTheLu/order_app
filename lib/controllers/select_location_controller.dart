@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:order_app/firebase/function_firebase.dart';
+import 'package:order_app/models/user.dart';
 import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/location.dart';
 
@@ -11,6 +13,7 @@ class SelectLocationController extends GetxController {
   String area = "";
   String email = Get.arguments;
   String idUser = "";
+  
  FirebaseFirestore store = FirebaseFirestore.instance;
 
   Future setZoneAndArea() async {
@@ -18,10 +21,13 @@ class SelectLocationController extends GetxController {
       "zone": zone,
       "area": area,
     };
-    store.collection("users").where("email", isEqualTo: email).get().then((value) {
+    await store.collection("users").where("email", isEqualTo: email).get().then((value) async {
       idUser = value.docs.first.id;
-      store.collection("users").doc(idUser).update(user).then((value) => Get.offAllNamed(Routes.HOMEALL, arguments: email));
-    }).catchError((e) {});
+      await store.collection("users").doc(idUser).update(user).then((value) async {
+        UserApp userApp = await FunctionFireBase.getInfoUser(email: email);
+        Get.offAllNamed(Routes.HOMEALL, arguments: userApp);
+      }).catchError((e) {});
+  });
   }
   locationData(){
     switch(zone){

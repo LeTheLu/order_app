@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:order_app/controllers/home_all_controller.dart';
 import 'package:order_app/models/product.dart';
+import 'package:order_app/models/user.dart';
 import 'package:order_app/utils/colors.dart';
 
 class FunctionFireBase {
@@ -79,10 +80,21 @@ class FunctionFireBase {
 
   static Future getCountMyCart({required String idProduct}) async {
     int count = 0;
-    await _firebaseFirestore.collection("users").doc(homeAllController.userApp!.idUser).collection("shopping")
+    await _firebaseFirestore.collection("users").doc(homeAllController.userApp.idUser).collection("shopping")
         .doc("cart").get().then((value) {
       count = value.data()![idProduct];
     });
     return count;
+  }
+  static Future<UserApp> getInfoUser({required String email}) async {
+    UserApp userApp = UserApp();
+    await _firebaseFirestore
+        .collection("users")
+        .where("email", isEqualTo: email)
+        .get()
+        .then((value) {
+      userApp = UserApp.fromJson(value.docs.first.data());
+    }).catchError((e) {});
+    return userApp;
   }
 }

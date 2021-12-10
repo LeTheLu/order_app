@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +12,7 @@ import 'package:order_app/widgets/button/button.dart';
 
 class MyCart extends StatelessWidget {
   const MyCart({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +27,30 @@ class MyCart extends StatelessWidget {
                 const Divider(),
                 Expanded(
                   child: GetBuilder<MyCartController>(
-                    init: MyCartController(),
-                    builder: (controller) {
-                      return ListView.separated(
-                        itemCount: controller.listDataProduct.length,
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemBuilder: (context, index) {
-                          return ItemCart(product: controller.listDataProduct[index],);
-                        });
+                      init: MyCartController(),
+                      builder: (controller) {
+                      return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        stream: controller.streamCart,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Something went wrong');
+                          }
+
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Text("Loading");
+                          }
+                          if(snapshot.hasData){
+                                print(snapshot.data!.data());
+                            return Text(snapshot.data!.data().toString());
+                          }
+                          return ListView.separated(
+                            itemCount: controller.listDataProduct.length,
+                            separatorBuilder: (context, index) => const Divider(),
+                            itemBuilder: (context, index) {
+                              return ItemCart(product: controller.listDataProduct[index],);
+                            });
+                        }
+                      );
                     }
                   ),
                 ),
@@ -54,7 +74,12 @@ class MyCart extends StatelessWidget {
                             color: Color(0xff489E67),
                             borderRadius: BorderRadius.all(Radius.circular(4))
                           ),
-                          child: Text("\$12.98", style: TextStyle(color: Colors.white, fontSize: 12),),
+                          child: GetBuilder<MyCartController>(
+                            init: MyCartController(),
+                            builder: (controller) {
+                              return Text(controller.total.toString(), style: const TextStyle(color: Colors.white, fontSize: 12),);
+                            }
+                          ),
                         ))
                   ],
                 ))

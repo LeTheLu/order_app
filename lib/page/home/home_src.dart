@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:order_app/controllers/home_controller.dart';
 import 'package:order_app/page/home/widget_home/list_view/list_item.dart';
 import 'package:order_app/page/home/widget_home/list_view/list_menu_horizontal.dart';
-import 'package:order_app/widgets/bottom_appbar/bottom_appbar.dart';
 import 'package:order_app/page/home/widget_home/title_home/tag_home.dart';
-import 'package:order_app/widgets/button/button.dart';
 import 'package:order_app/widgets/text_field/search.dart';
 
 import '../../utils/colors.dart';
@@ -19,6 +17,7 @@ class HomeSrc extends StatefulWidget {
 }
 
 class _HomeSrcState extends State<HomeSrc> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +51,8 @@ class _HomeSrcState extends State<HomeSrc> {
                               width: 10,
                             ),
                             GetBuilder<HomeController>(
-                              init:  HomeController(),
-                              builder: (controller) {
-                                return controller.homeAllController.userApp.isNull ? Text("loading"): Text(controller.homeAllController.userApp!.zone ?? "",
+                              builder: (HomeController controller) {
+                                return controller.homeAllController.userApp.isNull ? Text("loading"): Text("${controller.homeAllController.userApp.zone} , ${controller.homeAllController.userApp.area}",
                                     style: TextStyle(
                                         fontFamily: "GilroyLight",
                                         fontSize: 18,
@@ -83,7 +81,6 @@ class _HomeSrcState extends State<HomeSrc> {
                     titleAction: "See all",
                     onTapAction: () {}),
                 GetBuilder<HomeController>(
-                  init: HomeController(),
                   builder: (controller) => controller.dataExclusiveOffer.isEmpty
                       ? const Center(
                           child: CircularProgressIndicator(),
@@ -97,7 +94,6 @@ class _HomeSrcState extends State<HomeSrc> {
                     titleAction: "See all",
                     onTapAction: () {}),
                 GetBuilder<HomeController>(
-                  init: HomeController(),
                   builder: (controller) => controller.dataBestSelling.isEmpty
                       ? const Center(
                           child: CircularProgressIndicator(),
@@ -115,7 +111,6 @@ class _HomeSrcState extends State<HomeSrc> {
                   height: 20,
                 ),
                 GetBuilder<HomeController>(
-                  init: HomeController(),
                   builder: (controller) => controller.dataGroceries.isEmpty
                       ? const Center(
                           child: CircularProgressIndicator(),

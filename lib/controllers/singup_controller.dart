@@ -39,6 +39,7 @@ class SingUpController extends GetxController{
             "idUser" : value.docs.first.id,
           };
           await store.collection("users").doc(value.docs.first.id).update(idUserMap).then((val) async {
+
             Get.offAllNamed(Routes.SELECT_LOCATION, arguments: email);
           });
         });

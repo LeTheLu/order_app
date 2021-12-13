@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:order_app/utils/colors.dart';
+import 'package:order_app/models/product.dart';
 import 'package:order_app/utils/text_styte.dart';
 
 class ItemFavorite extends StatelessWidget {
-  const ItemFavorite({Key? key}) : super(key: key);
+  final Product product;
+  const ItemFavorite({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +23,35 @@ class ItemFavorite extends StatelessWidget {
                   height: 55,
                   width: 55,
                   color: Colors.teal,
+                  child: Image.network(
+                    product.img[0],
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+
+                      return const Center(
+                          child: CircularProgressIndicator());
+                      // You can use LinearProgressIndicator or CircularProgressIndicator instead
+                    },
+                    errorBuilder: (context, error, stackTrace) =>
+                    const Center(
+                      child: Icon(Icons.clear),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 20,),
                 SizedBox(
                   width: 241,
-                  height: 60,
+                  //height: 60,
                   child: Row(
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Title",style: TextStyle(fontSize: 16, fontFamily: Font.fontBold),),
+                          Text(product.name,style: const TextStyle(fontSize: 16, fontFamily: Font.fontBold),),
                           const SizedBox(height: 5,),
-                          Text("Title",style: TextStyle(fontSize: 14, fontFamily: Font.fontLight),),
+                          Text(product.type,style: const TextStyle(fontSize: 14, fontFamily: Font.fontLight),),
                           const SizedBox(height: 14,),
                         ],
                       )
@@ -51,7 +67,7 @@ class ItemFavorite extends StatelessWidget {
                 onTap: (){},
                 child: Row(
                   children: [
-                    const Text("\$4.99", style: TextStyle(
+                    Text("\$${product.price}", style:const TextStyle(
                         fontFamily: Font.fontBold,
                         fontSize: 18
                     ),),

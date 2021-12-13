@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/favorites_controller.dart';
+import 'package:order_app/controllers/my_cart_controller.dart';
+import 'package:order_app/controllers/product_detail_controller.dart';
+import 'package:order_app/firebase/function_firebase.dart';
 import 'package:order_app/models/product.dart';
 import 'package:order_app/page/product_detail/widget_prduct_detail/expand_pro.dart';
 import 'package:order_app/utils/colors.dart';
@@ -16,11 +20,12 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> with SingleTickerProviderStateMixin {
   late TabController _controller;
-  late Product product;
+  Product product = Get.arguments;
+
+
 
   @override
   void initState() {
-    product = Get.arguments;
     _controller = TabController(length: product.img.length, vsync: this);
     super.initState();
   }
@@ -88,7 +93,25 @@ class _ProductDetailState extends State<ProductDetail> with SingleTickerProvider
                                 style: const TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.bold),
                               ),
-                              SvgPicture.asset("assets/icons/heart.svg"),
+                              GetBuilder<ProductDetailController>(
+                                init: ProductDetailController(),
+                                builder: (controller) {
+                                  return InkWell(
+                                    onTap: (){
+                                      controller.checkLike = !controller.checkLike;
+                                      if(controller.checkLike){
+                                        FunctionFireBase.addFavorites(gmail: controller.homeAllController.userApp.email ?? "", idProduct: product.id, check: true);
+                                      }
+                                      else{
+                                        FunctionFireBase.addFavorites(gmail: controller.homeAllController.userApp.email ?? "", idProduct: product.id, check: false);
+
+                                      }
+                                      controller.update();
+                                      },
+                                    child: SvgPicture.asset("assets/icons/heart.svg", color: controller.checkLike ? Colors.red: Colors.grey,),
+                                  );
+                                }
+                              ),
                             ],
                           ),
                           const SizedBox(

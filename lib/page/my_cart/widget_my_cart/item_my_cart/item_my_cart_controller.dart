@@ -19,7 +19,7 @@ class ItemMyCartController extends GetxController{
     countProduct ++;
     totalItem = double.parse(product.price)*countProduct.toInt();
     update([product.id]);
-    myCartController.getTotal();
+    //myCartController.getTotal();
   }
 
   Future minusProduct({required String idProduct}) async {
@@ -27,7 +27,7 @@ class ItemMyCartController extends GetxController{
       countProduct --;
       totalItem = double.parse(product.price)*countProduct.toInt();
       update([product.id]);
-      myCartController.getTotal();
+      //myCartController.getTotal();
     }
   }
 

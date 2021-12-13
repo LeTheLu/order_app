@@ -76,7 +76,39 @@ class FunctionFireBase {
     });
   }
 
-  static Future addFavorites() async {}
+  static Future addFavorites({required String gmail, required String idProduct, required bool check}) async {
+    await _firebaseFirestore
+        .collection("users")
+        .where("email", isEqualTo: gmail)
+        .get()
+        .then((value) async {
+      Map<String, dynamic> product = {idProduct: check};
+      await _firebaseFirestore
+          .collection("users")
+          .doc(value.docs.first.id)
+          .collection("shopping")
+          .doc("favorites")
+          .update(product)
+          .then((value) {
+            if(check){
+              Get.snackbar(
+                  "Đã yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
+                  snackPosition: SnackPosition.BOTTOM,
+                  icon: const Icon(Icons.check),
+                  backgroundColor: ColorApp.themeColor.withOpacity(0.5));
+            }
+            else {
+              Get.snackbar(
+                  "Đã bỏ yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
+                  snackPosition: SnackPosition.BOTTOM,
+                  icon: const Icon(Icons.check),
+                  backgroundColor: Colors.red.withOpacity(0.5));
+            }
+      }); //update(product);
+    }).catchError((e) {
+      Get.snackbar("Like sản phẩm thất bại", "Bạn hãy thử lại", icon: const Icon(Icons.clear), backgroundColor: Colors.red.withOpacity(0.5));
+    });
+  }
 
   static Future getCountMyCart({required String idProduct}) async {
     int count = 0;

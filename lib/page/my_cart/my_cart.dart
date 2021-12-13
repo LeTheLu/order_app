@@ -38,20 +38,21 @@ class MyCart extends StatelessWidget {
                         if (snapshot.hasData) {
                           controller.listCart =
                               snapshot.data!.data()!.keys.toList();
-                          return ListView.separated(
-                              itemCount: controller.listCart.length,
-                              separatorBuilder: (context, index) =>
-                              const Divider(),
-                              itemBuilder: (context, index) {
-                                return FutureBuilder<Product> (
-                                  future: controller.getItemDataProduct(idProduct: controller.listCart[index]),
-                                    builder: (context, snapshotF) {
-                                      if(snapshotF.hasData){
-                                        return ItemCart(product: snapshotF.data!,);
-                                      }
-                                      return const Center(child: CircularProgressIndicator(),);
-                                    },);
-                              });
+                          return StreamBuilder<List<Product>>(
+                            stream: controller.getDataTest(),
+                            builder: (context, snapshotS) {
+                              if(snapshot.hasData){
+                                return ListView.separated(
+                                    itemCount: controller.listDataCart.length,
+                                    separatorBuilder: (context, index) =>
+                                    const Divider(),
+                                    itemBuilder: (context, index) {
+                                      return Text(controller.listDataCart[index].name);
+                                    });
+                              }
+                              return CircularProgressIndicator();
+                            }
+                          );
                         }
                         return Text("home1");
                       });

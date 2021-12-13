@@ -16,11 +16,21 @@ class MyCartController extends GetxController {
       .snapshots();
 
   List<String> listCart = [];
+  List<Product> listDataCart = [];
   double total = 0.0;
 
   Future<Product> getItemDataProduct({required String idProduct}) async {
-    Product product = await FunctionFireBase.getProductById(
-        idProduct: idProduct);
+    Product product = await FunctionFireBase.getProductById(idProduct: idProduct);
     return product;
+  }
+
+  Stream<List<Product>> getDataTest() async* {
+    List<Product> listTest = [];
+    await Future.forEach(listCart, (element) async {
+      Product product = await FunctionFireBase.getProductById(idProduct: element.toString());
+      listTest.add(product);
+    });
+    listDataCart = listTest;
+    yield listDataCart;
   }
 }

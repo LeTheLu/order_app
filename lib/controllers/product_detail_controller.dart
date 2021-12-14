@@ -11,7 +11,7 @@ class ProductDetailController extends GetxController {
 
   @override
   void onInit() {
-    checkLike = favoritesController.listFavorite.contains(product.id);
+    checkLike = favoritesController.listDataFavorites.contains(product);
     super.onInit();
   }
 }

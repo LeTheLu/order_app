@@ -9,28 +9,36 @@ import 'package:order_app/models/product.dart';
 
 class MyCartController extends GetxController {
   final HomeAllController homeAllController = Get.find();
-  late Stream<
-      DocumentSnapshot<Map<String, dynamic>>> streamCart = FirebaseFirestore
-      .instance.collection('users').doc(homeAllController.userApp.idUser)
-      .collection("shopping").doc("cart")
-      .snapshots();
+  late QuerySnapshot<Map<String, dynamic>> initDataMyCart ;
 
-  List<String> listCart = [];
+  List<String> listIdItemCart = [];
   List<Product> listDataCart = [];
+
   double total = 0.0;
 
-  Future<Product> getItemDataProduct({required String idProduct}) async {
-    Product product = await FunctionFireBase.getProductById(idProduct: idProduct);
-    return product;
-  }
 
   Stream<List<Product>> getDataTest() async* {
+    yield listDataCart;
+  }
+
+  Future initData() async {
     List<Product> listTest = [];
-    await Future.forEach(listCart, (element) async {
+    await Future.forEach(listIdItemCart, (element) async {
       Product product = await FunctionFireBase.getProductById(idProduct: element.toString());
       listTest.add(product);
     });
     listDataCart = listTest;
-    yield listDataCart;
+  }
+
+
+
+  @override
+  void onInit() async {
+    initDataMyCart = homeAllController.initDataMyCart;
+    for (var element in initDataMyCart.docs) {
+      listIdItemCart.add(element.id);
+    }
+    await initData();
+    super.onInit();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,15 @@ class LoginController extends GetxController{
 
   bool checkLoginErr = false;
   bool checkPasswordHind = true;
+  late QuerySnapshot<Map<String, dynamic>> initDataMyCart;
+  late QuerySnapshot<Map<String, dynamic>> initDataFavorite;
 
   Future login() async {
     auth.signInWithEmailAndPassword(email: emailController.text, password: passController.text)
         .then((value) async {
           UserApp userApp = await FunctionFireBase.getInfoUser(email: emailController.text);
-      Get.offAllNamed(Routes.HOMEALL,arguments: userApp);
+          await dataStart(idUser: userApp.idUser??"");
+          Get.offAllNamed(Routes.HOMEALL,arguments: {"userApp" : userApp , "initDataMyCart" : initDataMyCart, "initDataFavorite" : initDataFavorite});
     }).catchError((e){
       Get.defaultDialog(
           title: "Đăng nhập không thành công",
@@ -31,6 +35,11 @@ class LoginController extends GetxController{
       );
       update();
     });
+  }
+
+  dataStart({required String idUser}) async {
+    initDataMyCart = await FirebaseFirestore.instance.collection('users').doc(idUser).collection("shopping").doc("cart").collection("items").get();
+    initDataFavorite = await FirebaseFirestore.instance.collection('users').doc(idUser).collection("shopping").doc("favorites").collection("items").get();
   }
 
   void passwordHind(){

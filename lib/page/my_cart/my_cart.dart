@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:order_app/controllers/my_cart_controller.dart';
@@ -25,37 +23,21 @@ class MyCart extends StatelessWidget {
                 const Divider(),
                 Expanded(
                     child: GetBuilder<MyCartController>(builder: (controller) {
-                  return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                      stream: controller.streamCart,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Something went wrong');
-                        }
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text("Loading");
-                        }
-                        if (snapshot.hasData) {
-                          controller.listCart =
-                              snapshot.data!.data()!.keys.toList();
-                          return StreamBuilder<List<Product>>(
-                            stream: controller.getDataTest(),
-                            builder: (context, snapshotS) {
-                              if(snapshot.hasData){
-                                return ListView.separated(
-                                    itemCount: controller.listDataCart.length,
-                                    separatorBuilder: (context, index) =>
-                                    const Divider(),
-                                    itemBuilder: (context, index) {
-                                      return Text(controller.listDataCart[index].name);
-                                    });
-                              }
-                              return CircularProgressIndicator();
-                            }
-                          );
-                        }
-                        return Text("home1");
-                      });
+                  return StreamBuilder<List<Product>> (
+                    initialData: controller.listDataCart,
+                    stream: controller.getDataTest(),
+                    builder: (context, snapshotS) {
+                      if(snapshotS.hasData){
+                        return ListView.separated(
+                            itemCount: controller.listDataCart.length,
+                            separatorBuilder: (context, index) =>
+                            const Divider(),
+                            itemBuilder: (context, index) {
+                              return ItemCart(product: controller.listDataCart[index]);
+                            });
+                      }
+                      return const Center(child: CircularProgressIndicator(),);
+                    },);
                 }))
               ],
             ),

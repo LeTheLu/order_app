@@ -100,10 +100,10 @@ class _ProductDetailState extends State<ProductDetail> with SingleTickerProvider
                                     onTap: (){
                                       controller.checkLike = !controller.checkLike;
                                       if(controller.checkLike){
-                                        FunctionFireBase.addFavorites(gmail: controller.homeAllController.userApp.email ?? "", idProduct: product.id, check: true);
+                                        FunctionFireBase.addFavorites(product: product, check: true);
                                       }
                                       else{
-                                        FunctionFireBase.addFavorites(gmail: controller.homeAllController.userApp.email ?? "", idProduct: product.id, check: false);
+                                        FunctionFireBase.addFavorites(product: product, check: false);
 
                                       }
                                       controller.update();

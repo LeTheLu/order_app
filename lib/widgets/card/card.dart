@@ -63,7 +63,7 @@ Widget cardItem({required Product product,required String idProduct, double? rig
                         Text(product.price,  style: const  TextStyle(color: Colors.black , fontFamily: "GilroyBold",fontSize: 18,)),
                         GestureDetector(
                           onTap: (){
-                            FunctionFireBase.addProduct(gmail: controller.homeAllController.userApp.email ?? "", idProduct: idProduct);
+                            FunctionFireBase.addMyCart(product: product);
                           },
                           child: SvgPicture.asset("assets/icons/+.svg"),
                         )

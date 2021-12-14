@@ -1,17 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/favorites_controller.dart';
 import 'package:order_app/controllers/home_all_controller.dart';
+import 'package:order_app/controllers/my_cart_controller.dart';
 import 'package:order_app/models/product.dart';
 import 'package:order_app/models/user.dart';
 import 'package:order_app/utils/colors.dart';
 
 class FunctionFireBase {
-
   static HomeAllController homeAllController = Get.find();
-
-  static final FirebaseFirestore _firebaseFirestore =
-      FirebaseFirestore.instance;
+  static FavoritesController favoritesController = Get.find();
+  static MyCartController myCartController = Get.find();
+  static final  _firebaseFirestoreUser = FirebaseFirestore.instance.collection("users").doc(homeAllController.userApp.idUser).collection("shopping");
+  static final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   static Future<Product> getProductById({required String idProduct}) async {
     DocumentSnapshot<Map<String, dynamic>> product;
@@ -52,72 +54,43 @@ class FunctionFireBase {
     return sanpham;
   }
 
-  static Future addProduct(
-      {required String gmail, required String idProduct}) async {
-    await _firebaseFirestore
-        .collection("users")
-        .where("email", isEqualTo: gmail)
-        .get()
-        .then((value) async {
-      Map<String, dynamic> product = {idProduct: 1};
-      await _firebaseFirestore
-          .collection("users")
-          .doc(value.docs.first.id)
-          .collection("shopping")
-          .doc("cart")
-          .update(product)
-          .then((value) => Get.snackbar(
-              "Đã thêm sản phẩm vào giỏ hàng", "hãy kiểm tra giỏ hàng nhé",
-              snackPosition: SnackPosition.BOTTOM,
-              icon: const Icon(Icons.check),
-              backgroundColor: ColorApp.themeColor.withOpacity(0.5))); //update(product);
-    }).catchError((e) {
-      Get.snackbar("Thêm sản phâm thất bại", "bạn hãy thử lại", icon: const Icon(Icons.clear), backgroundColor: Colors.red.withOpacity(0.5));
-    });
+  static addMyCart({required Product product}) async {
+    myCartController.listDataCart.add(product);
+      Get.snackbar("Thêm sản phâm thành công", "bạn hãy kiểm tra GIỎ HÀNG nhé!",
+          icon: const Icon(Icons.clear),
+          backgroundColor: ColorApp.themeColor.withOpacity(0.5));
+    _firebaseFirestoreUser.doc("cart").collection("items").doc(product.id).set({"soluong" : 1});
   }
 
-  static Future addFavorites({required String gmail, required String idProduct, required bool check}) async {
-    await _firebaseFirestore
-        .collection("users")
-        .where("email", isEqualTo: gmail)
-        .get()
-        .then((value) async {
-      Map<String, dynamic> product = {idProduct: check};
-      await _firebaseFirestore
-          .collection("users")
-          .doc(value.docs.first.id)
-          .collection("shopping")
-          .doc("favorites")
-          .update(product)
-          .then((value) {
-            if(check){
-              Get.snackbar(
-                  "Đã yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
-                  snackPosition: SnackPosition.BOTTOM,
-                  icon: const Icon(Icons.check),
-                  backgroundColor: ColorApp.themeColor.withOpacity(0.5));
-            }
-            else {
-              Get.snackbar(
-                  "Đã bỏ yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
-                  snackPosition: SnackPosition.BOTTOM,
-                  icon: const Icon(Icons.check),
-                  backgroundColor: Colors.red.withOpacity(0.5));
-            }
-      }); //update(product);
-    }).catchError((e) {
-      Get.snackbar("Like sản phẩm thất bại", "Bạn hãy thử lại", icon: const Icon(Icons.clear), backgroundColor: Colors.red.withOpacity(0.5));
-    });
+  static Future addFavorites({required Product product, required bool check}) async {
+    if (check) {
+      favoritesController.listDataFavorites.add(product);
+          Get.snackbar(
+              "Đã yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
+              backgroundColor: ColorApp.themeColor.withOpacity(0.5),
+              icon: const Icon(Icons.check));
+      _firebaseFirestoreUser.doc("favorites").collection("items").doc(product.id).set({});
+    } else {
+      favoritesController.listDataFavorites.removeWhere((element) => element == product);
+          Get.snackbar(
+              "Đã bỏ yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
+              icon: const Icon(Icons.check),
+              backgroundColor: Colors.red.withOpacity(0.5));
+      _firebaseFirestoreUser.doc("favorites").collection("items").doc(product.id).delete();
+    }
   }
 
   static Future getCountMyCart({required String idProduct}) async {
     int count = 0;
-    await _firebaseFirestore.collection("users").doc(homeAllController.userApp.idUser).collection("shopping")
-        .doc("cart").get().then((value) {
+    await _firebaseFirestoreUser
+        .doc("cart")
+        .get()
+        .then((value) {
       count = value.data()![idProduct];
     });
     return count;
   }
+
   static Future<UserApp> getInfoUser({required String email}) async {
     UserApp userApp = UserApp();
     await _firebaseFirestore

@@ -31,17 +31,17 @@ class ItemMyCartController extends GetxController{
     }
   }
 
-  Future countProductInit() async {
+  /*Future countProductInit() async {
     await firebaseFirestore.collection("users").doc(homeAllController.userApp.idUser).collection("shopping")
         .doc("cart").get().then((value) {
       int index = value.data()![product.id];
       countProduct = index.obs;
         });
-  }
+  }*/
 
   @override
   void onInit() async {
-    await countProductInit();
+    //await countProductInit();
     totalItem = double.parse(product.price)*countProduct.toDouble();
     update([product.id]);
     debounce(countProduct, (_) async {

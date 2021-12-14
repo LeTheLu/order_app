@@ -32,11 +32,17 @@ class FavoritesController extends GetxController{
   }
 
   addAllToCart(){
-    List<Product> listDemo= [];
-    myCartController.listDataCart.addAll(listDataFavorites);
-    myCartController.listDataCart.forEach((element) {
-      myCartController.listDataCart.contains(element);
-    });
+    List<Product> list = myCartController.listDataCart + listDataFavorites;
+    for (var elementCA in myCartController.listDataCart) {
+      for (var elementFA in listDataFavorites) {
+        if(elementCA.id == elementFA.id){
+          list.removeWhere((element) => element == elementCA);
+        }
+      }
+    }
+    myCartController.listDataCart = list;
+    listDataFavorites.clear();
+    update();
   }
 
   @override

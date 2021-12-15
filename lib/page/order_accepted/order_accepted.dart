@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/home_all_controller.dart';
 import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/text_styte.dart';
 import 'package:order_app/widgets/button/button.dart';
@@ -10,6 +11,7 @@ class OrderAccepted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeAllController homeAllController = Get.find();
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -45,7 +47,7 @@ class OrderAccepted extends StatelessWidget {
                     const SizedBox(height: 24,),
                     InkWell(
                       onTap: (){
-                        Get.back();
+                        //Get.toNamed(Routes.HOMEALL,arguments: {"userApp" : homeAllController.userApp , "initDataMyCart" : homeAllController.initDataMyCart, "initDataFavorite" : homeAllController.initDataFavorite});
                       },
                       child: const Text("Back to home", style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: Font.fontLight, fontWeight: FontWeight.bold),),
                     ),

@@ -4,7 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:order_app/utils/colors.dart';
 
 class ButtonAccount extends StatelessWidget {
-  const ButtonAccount({Key? key}) : super(key: key);
+  final VoidCallback tap;
+
+
+  const ButtonAccount({Key? key, required this.tap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,9 @@ class ButtonAccount extends StatelessWidget {
           color: const Color(0xffF2F3F2)
       ),
       child: InkWell(
-        onTap: (){},
+        onTap: (){
+          tap.call();
+        },
         child: Stack(
           alignment: Alignment.center,
             children: [

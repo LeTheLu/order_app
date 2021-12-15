@@ -55,23 +55,48 @@ class FunctionFireBase {
   }
 
   static addMyCart({required Product product}) async {
+    List test = [];
+    for (var element in myCartController.listDataCart) {
+      test.add(element.id);
+    }
+    if(test.contains(product.id) ){
+      _firebaseFirestoreUser.doc("cart").collection("items").doc(product.id).get().then((value) async {
+        int count = value.get("soluong");
+        _firebaseFirestoreUser.doc("cart").collection("items").doc(product.id).set({"soluong" : ++count });
+      });
+      Get.snackbar("bạn đã có sản phẩm này GIỎ HÀNG", "đã thêm một sản phẩm!",
+          icon: const Icon(Icons.check),
+          backgroundColor: ColorApp.themeColor.withOpacity(0.2));
+    }else{
     myCartController.listDataCart.add(product);
+    myCartController.listIdItemCart.add(product.id);
+    myCartController.update();
       Get.snackbar("Thêm sản phâm thành công", "bạn hãy kiểm tra GIỎ HÀNG nhé!",
           icon: const Icon(Icons.clear),
           backgroundColor: ColorApp.themeColor.withOpacity(0.5));
-    _firebaseFirestoreUser.doc("cart").collection("items").doc(product.id).set({"soluong" : 1});
+    _firebaseFirestoreUser.doc("cart").collection("items").doc(product.id).set({"soluong" : 1});}
+  }
+
+  static deleteMyCart({required Product product}) async {
+    myCartController.listIdItemCart.remove(product.id);
+    myCartController.listDataCart.removeWhere((element) => element.id == product.id);
+    myCartController.update();
+      _firebaseFirestoreUser.doc("cart").collection("items").doc(product.id).delete();
   }
 
   static Future addFavorites({required Product product, required bool check}) async {
     if (check) {
       favoritesController.listDataFavorites.add(product);
+      myCartController.listIdItemCart.add(product.id);
           Get.snackbar(
               "Đã yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
               backgroundColor: ColorApp.themeColor.withOpacity(0.5),
               icon: const Icon(Icons.check));
+      myCartController.getTotal();
+      myCartController.update(["total"]);
       _firebaseFirestoreUser.doc("favorites").collection("items").doc(product.id).set({});
     } else {
-      favoritesController.listDataFavorites.removeWhere((element) => element == product);
+      favoritesController.listDataFavorites.removeWhere((element) => element.id == product.id);
           Get.snackbar(
               "Đã bỏ yêu thích sản phẩm", "hãy kiểm tra mục yêu thích nhé",
               icon: const Icon(Icons.check),

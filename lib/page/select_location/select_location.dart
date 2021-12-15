@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:order_app/controllers/select_location_controller.dart';
+import 'package:order_app/utils/colors.dart';
 import 'package:order_app/widgets/appbar/app_bar.dart';
 import 'package:order_app/widgets/button/button.dart';
 import 'package:order_app/page/select_location/widget_select_location/text_field.dart';
@@ -36,7 +37,8 @@ class SelectLocation extends StatelessWidget {
               ),
               GetBuilder<SelectLocationController>(
                 init: SelectLocationController(),
-                builder: (controller) => Button(
+                id: "select",
+                builder: (controller) => controller.checkLoadingSelect? CircularProgressIndicator(color: ColorApp.themeColor,) :Button(
                   nameButton: "Submit",
                   fontSize: 18,
                   onTap: () {

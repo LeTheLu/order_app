@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:order_app/controllers/my_cart_controller.dart';
 import 'package:order_app/firebase/function_firebase.dart';
 import 'package:order_app/models/product.dart';
+import 'package:order_app/utils/colors.dart';
 
 import 'home_all_controller.dart';
 
@@ -15,34 +18,52 @@ class FavoritesController extends GetxController{
 
   List<String> listIdItemFavorite = [];
   List<Product> listDataFavorites = [];
-  get  listDataFavoritesObs => listDataFavorites.obs;
 
   Stream<List<Product>> getDataTest() async* {
     yield listDataFavorites;
   }
 
-  Future  initData() async {
+  Future<List<Product>>  initData() async {
     List<Product> listTest = [];
     await Future.forEach(listIdItemFavorite, (element) async {
       Product product = await FunctionFireBase.getProductById(
           idProduct: element.toString());
       listTest.add(product);
     });
-    listDataFavorites = listTest;
+    return listTest;
   }
 
-  addAllToCart(){
-    List<Product> list = myCartController.listDataCart + listDataFavorites;
-    for (var elementCA in myCartController.listDataCart) {
+  addAllToCart() async {
+    List<Product> data = [];
+    data.addAll(listDataFavorites);
+    for (var elementC in myCartController.listDataCart) {
       for (var elementFA in listDataFavorites) {
-        if(elementCA.id == elementFA.id){
-          list.removeWhere((element) => element == elementCA);
+        if(elementC.id == elementFA.id){
+          data.removeWhere((element) => element.id == elementC.id);
         }
       }
     }
-    myCartController.listDataCart = list;
-    listDataFavorites.clear();
-    update();
+    if(data.isEmpty){
+      Get.snackbar(
+          "Tất cả sản phẩm đã được thêm vào giỏ hàng", "hãy kiểm tra giỏ hàng nhé",
+          icon: const Icon(Icons.check),
+          backgroundColor: Colors.red.withOpacity(0.5));
+    }
+    myCartController.listDataCart.addAll(data);
+    for (var element in data) {
+      myCartController.listIdItemCart.add(element.id);
+    }
+    Get.snackbar(
+        "Đã thêm vào giỏ hàng", "hãy kiểm tra giỏ hàng nhé",
+        icon: const Icon(Icons.check),
+        backgroundColor: ColorApp.themeColor.withOpacity(0.5));
+    myCartController.getTotal();
+    myCartController.update(["total"]);
+
+    for (Product element in data) {
+      await FirebaseFirestore.instance.collection("users").doc(homeAllController.userApp.idUser)
+          .collection("shopping").doc("cart").collection("items").doc(element.id).set({"soluong" : 1});
+    }
   }
 
   @override
@@ -51,7 +72,8 @@ class FavoritesController extends GetxController{
     for (var element in initDataFavorite.docs) {
       listIdItemFavorite.add(element.id);
     }
-    await initData();
+    listDataFavorites = await initData();
+    update();
     super.onInit();
   }
 }

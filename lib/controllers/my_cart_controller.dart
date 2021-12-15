@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:order_app/controllers/home_all_controller.dart';
 import 'package:order_app/firebase/function_firebase.dart';
 import 'package:order_app/models/product.dart';
+import 'package:order_app/page/my_cart/widget_my_cart/item_my_cart/item_my_cart_controller.dart';
 
 
 class MyCartController extends GetxController {
@@ -14,7 +15,17 @@ class MyCartController extends GetxController {
   List<String> listIdItemCart = [];
   List<Product> listDataCart = [];
 
-  double total = 0.0;
+
+
+    Stream<String> getTotal() async* {
+     double total = 0.0;
+      for (var element in listIdItemCart) {
+        ItemMyCartController controller = Get.find(tag: element);
+        total = total + controller.totalItem ;
+      }
+    yield total.toString();
+     update(["total"]);
+  }
 
 
   Stream<List<Product>> getDataTest() async* {
@@ -28,6 +39,7 @@ class MyCartController extends GetxController {
       listTest.add(product);
     });
     listDataCart = listTest;
+    update();
   }
 
 

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:order_app/controllers/my_cart_controller.dart';
+import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/utils/text_styte.dart';
 import 'package:order_app/widgets/button/button.dart';
@@ -45,7 +47,18 @@ class Checkout extends StatelessWidget {
                     itemCheckout(title: "Delivery", actionTitle: "Select Method"),
                     itemCheckout(title: "Pament", actionTitle: ""),
                     itemCheckout(title: "Promo Code", actionTitle: "Pick discount"),
-                    itemCheckout(title: "Total Cost", actionTitle: "\$13.97"),
+                    GetBuilder<MyCartController>(
+                        id: "total",
+                      init: MyCartController(),
+                      builder: (controller) {
+                        return StreamBuilder<String>(
+                          stream: controller.getTotal(),
+                          builder: (context, snapshot) {
+                            return itemCheckout(title: "Total Cost", actionTitle: "${snapshot.data}\$");
+                          }
+                        );
+                      }
+                    ),
                     const SizedBox(height: 20,),
                     const Text("By placing an order you agree to our",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.grey),),
                      RichText(
@@ -58,9 +71,18 @@ class Checkout extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 26.0),
-                      child: Button(nameButton: "Place Order",fontSize: 18,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 26.0),
+                      child: GetBuilder<MyCartController>(
+                        builder: (controller) => Button(nameButton: "Place Order",fontSize: 18,onTap: (){
+                          if(controller.listDataCart.isEmpty){
+                            Get.snackbar("Giỏ hàng trống", "hãy đặt hàng nhé!");
+                          }
+                          else{
+                            Get.toNamed(Routes.ORDER_ACCEPTED);
+                          }
+                        },),
+                      )
                     )
                   ],
                 ),)

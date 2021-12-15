@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/text_styte.dart';
 import 'package:order_app/widgets/button/button.dart';
 
@@ -43,7 +45,7 @@ class OrderAccepted extends StatelessWidget {
                     const SizedBox(height: 24,),
                     InkWell(
                       onTap: (){
-
+                        Get.back();
                       },
                       child: const Text("Back to home", style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: Font.fontLight, fontWeight: FontWeight.bold),),
                     ),

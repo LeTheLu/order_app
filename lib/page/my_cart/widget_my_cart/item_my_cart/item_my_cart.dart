@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:order_app/firebase/function_firebase.dart';
 import 'package:order_app/models/product.dart';
 import 'package:order_app/utils/colors.dart';
 import 'package:order_app/utils/text_styte.dart';
@@ -20,6 +21,24 @@ class ItemCart extends StatelessWidget {
           child: SizedBox(
             child: Stack(
               children: [
+                GetBuilder<ItemMyCartController>(
+                  init: ItemMyCartController(product: product),
+                  builder: (controller) {
+                    return Positioned(
+                      top: 0,
+                      right: 25,
+                      child: InkWell(
+                        onTap: () {
+                          FunctionFireBase.deleteMyCart(product: product);
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          color: ColorApp.greyColor,
+                        ),
+                      ),
+                    );
+                  }
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,17 +124,6 @@ class ItemCart extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-                Positioned(
-                  top: 0,
-                  right: 25,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.clear,
-                      color: ColorApp.greyColor,
-                    ),
-                  ),
                 ),
                 GetBuilder<ItemMyCartController>(
                   id: product.id,

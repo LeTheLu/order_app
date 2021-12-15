@@ -65,14 +65,18 @@ class MyCart extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4))),
                           child: GetBuilder<MyCartController>(
-                              init: MyCartController(),
-                              builder: (controller) {
-                                return Text(
-                                  controller.total.toString(),
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                );
-                              }),
+                            id: "total",
+                            builder: (controller) => StreamBuilder<String>(
+                                stream: controller.getTotal(),
+                                builder: (context, snapshot) {
+                                  return Text(
+                                    snapshot.data ?? "0.0",
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  );
+                                }
+                            ),
+                          )
                         ))
                   ],
                 ))

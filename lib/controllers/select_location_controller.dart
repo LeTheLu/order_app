@@ -8,15 +8,19 @@ import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/location.dart';
 
 class SelectLocationController extends GetxController {
+  bool checkLoadingSelect = false;
   var checkLocation = ["Hồ Chí Minh", "Hà Nội", "Đà Nẵng"];
   String zone = "";
   String area = "";
   String email = Get.arguments;
   String idUser = "";
-  
+  late QuerySnapshot<Map<String, dynamic>> initDataMyCart;
+  late QuerySnapshot<Map<String, dynamic>> initDataFavorite;
  FirebaseFirestore store = FirebaseFirestore.instance;
 
   Future setZoneAndArea() async {
+    checkLoadingSelect = true;
+    update(["select"]);
     Map<String, String> user = {
       "zone": zone,
       "area": area,
@@ -25,8 +29,12 @@ class SelectLocationController extends GetxController {
       idUser = value.docs.first.id;
       await store.collection("users").doc(idUser).update(user).then((value) async {
         UserApp userApp = await FunctionFireBase.getInfoUser(email: email);
-        Get.offAllNamed(Routes.HOMEALL, arguments: userApp);
-      }).catchError((e) {});
+        await dataStart(idUser: userApp.idUser??"");
+        Get.offAllNamed(Routes.HOMEALL,arguments: {"userApp" : userApp , "initDataMyCart" : initDataMyCart, "initDataFavorite" : initDataFavorite});
+      }).catchError((e) {
+        checkLoadingSelect = false;
+        update(["select"]);
+      });
   });
   }
   locationData(){
@@ -51,6 +59,12 @@ class SelectLocationController extends GetxController {
       }
     }
   }
+
+  dataStart({required String idUser}) async {
+    initDataMyCart = await FirebaseFirestore.instance.collection('users').doc(idUser).collection("shopping").doc("cart").collection("items").get();
+    initDataFavorite = await FirebaseFirestore.instance.collection('users').doc(idUser).collection("shopping").doc("favorites").collection("items").get();
+  }
+
 @override
   void onInit() {
   locationData();

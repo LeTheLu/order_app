@@ -9,8 +9,9 @@ import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/colors.dart';
 
 class LoginController extends GetxController{
-  FirebaseAuth auth = FirebaseAuth.instance;
+  bool loadingLogin = false;
 
+  FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController emailController = TextEditingController();
   TextEditingController passController  = TextEditingController();
 
@@ -20,12 +21,16 @@ class LoginController extends GetxController{
   late QuerySnapshot<Map<String, dynamic>> initDataFavorite;
 
   Future login() async {
+    loadingLogin = true;
+    update(["login"]);
     auth.signInWithEmailAndPassword(email: emailController.text, password: passController.text)
         .then((value) async {
           UserApp userApp = await FunctionFireBase.getInfoUser(email: emailController.text);
           await dataStart(idUser: userApp.idUser??"");
           Get.offAllNamed(Routes.HOMEALL,arguments: {"userApp" : userApp , "initDataMyCart" : initDataMyCart, "initDataFavorite" : initDataFavorite});
     }).catchError((e){
+      loadingLogin = false;
+      update(["login"]);
       Get.defaultDialog(
           title: "Đăng nhập không thành công",
           titleStyle: const TextStyle(color: Colors.white),

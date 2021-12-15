@@ -94,8 +94,11 @@ class _SingUpState extends State<SingUp> {
                       const SizedBox(height: 30,),
                       GetBuilder<SingUpController>(
                         init: SingUpController(),
+                        id: "singup",
                         builder: (SingUpController _controller) =>
-                            Button(nameButton: "Sing Up",fontSize: 18, onTap: (){
+                        _controller.checkLoadingSingUp ?
+                        CircularProgressIndicator(color: ColorApp.themeColor,)
+                            :Button(nameButton: "Sing Up",fontSize: 18, onTap: (){
                               _controller.singUpGmailAndPass(
                                   email: _controller.emailTextController.text,
                                   password: _controller.passTextController.text,

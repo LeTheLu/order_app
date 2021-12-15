@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:order_app/routes/routes.dart';
 
 class SingUpController extends GetxController{
+  bool checkLoadingSingUp = false;
+
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore store = FirebaseFirestore.instance;
 
@@ -20,7 +22,8 @@ class SingUpController extends GetxController{
 
 
   Future<void> singUpGmailAndPass({required String email, required String password, required String nameUser }) async {
-
+    checkLoadingSingUp = true;
+    update(["singup"]);
     await auth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
       this.email = email;
       this.password = password;
@@ -46,7 +49,8 @@ class SingUpController extends GetxController{
 
       });
     }).catchError((e) {
-          throw Exception(e);
+      checkLoadingSingUp = false;
+      update(["singup"]);
     });
   }
 }

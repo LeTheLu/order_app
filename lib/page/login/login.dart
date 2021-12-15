@@ -95,12 +95,15 @@ class _LoginState extends State<Login> {
                         children: [
                           GetBuilder<LoginController>(
                             init: LoginController(),
-                            builder: (controller) => Button(
-                                nameButton: "Login",
-                                fontSize: 18,
-                                onTap: () {
-                                  controller.login();
-                                }),
+                            id: "login",
+                            builder: (controller){
+                              return controller.loadingLogin? CircularProgressIndicator(color: ColorApp.themeColor,) : Button(
+                                  nameButton: "Login",
+                                  fontSize: 18,
+                                  onTap: () {
+                                    controller.login();
+                                  });
+                            },
                           ),
                           const SizedBox(
                             height: 20,

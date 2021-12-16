@@ -6,7 +6,6 @@ import 'package:order_app/controllers/home_all_controller.dart';
 import 'package:order_app/page/account/widget_button/button_accout.dart';
 import 'package:order_app/routes/routes.dart';
 import 'package:order_app/utils/text_styte.dart';
-import 'package:order_app/widgets/button/button.dart';
 
 class Account extends StatelessWidget {
   const Account({Key? key}) : super(key: key);

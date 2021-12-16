@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: Routes.LOG_IN,
+      initialRoute: Routes.INITIAL,
       getPages: Pages.pages,
       defaultTransition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 500),

@@ -77,7 +77,7 @@ class SignIn extends StatelessWidget {
                           onTap: () {
                             Get.toNamed(Routes.LOG_IN);
                           },
-                          child: Text("Login with Email",
+                          child: Text("Login with Email or SingIn",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: ColorApp.themeColor,

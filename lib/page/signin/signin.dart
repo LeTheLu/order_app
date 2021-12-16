@@ -102,6 +102,9 @@ class SignIn extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Button(
+                          onTap: (){
+                            _controller.signInWithFacebook();
+                          },
                             nameButton: "Continue with Facebook",
                             imageIcon: Image.asset("assets/icons/facebook.png"),
                             color: const Color(0xFF4A66AC),
